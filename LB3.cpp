@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <string> 
+#include <string.h> 
 
 /* ЗАВДАННЯ: вивисти список українських команд, та поміняти місцями Динамо та Шахар*/
 
@@ -33,13 +34,6 @@ int main(){
     const char* name2 = "Шахтар";
     
     const char* list_of_all_clubs[] = {    
-    /*
-    я знаю що я змінюю константу, і так робити не можна,
-    але як я зрозумів то тут потрібно використовувати масиви типу С,
-    і я не знайшов метоу як зробити рядок типу С (const char* list_of_all_clubs[]) зміннним,
-    того лишив його у вигляді константи, але воно ЧОГОСЬ працює і таки змінює масив, хоча він константа,
-    та костилі, але працює, завдання я виконав))
-    */ 
         "Динамо",
         "Шахтар",
         "Дніпро-1",
@@ -61,11 +55,11 @@ int main(){
     for (int i = 0; i < size_of_list; i++){
             std::cout<< list_of_all_clubs[i] << std::endl;
             
-        if (list_of_all_clubs[i] == name1) {
+        if (strcmp(list_of_all_clubs[i], name1) == 0) {
             index_of_name1 = i;
         }
 
-        if (list_of_all_clubs[i] == name2) {
+        if (strcmp(list_of_all_clubs[i], name2) == 0) {
             index_of_name2 = i;
         }
             
