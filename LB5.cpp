@@ -55,7 +55,7 @@ int main() {
     outputMatr(&mas2d[0][0], n, m);
 
     int maxOfMins = findMaxOfRowMins(&mas2d[0][0], n, m);
-    std::cout << "Maximum of row minimums = " << maxOfMins << std::endl;
+    std::cout << "максимум з мінімумів = " << maxOfMins << std::endl;
 
     return 0;
 }
