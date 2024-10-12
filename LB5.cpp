@@ -1,60 +1,61 @@
 #include <iostream>
-#include <list>
 
-const int ROWS = 3;
-const int COLS = 3;
-int BigestOfSmollest = 0;
-
-std::list<int> SmollestOfRows;
-
-void printMatrix(int matrix[ROWS][COLS]) {
-    std::cout << "Матриця:\n";
-    for (int i = 0; i < ROWS; ++i) {
-        for (int j = 0; j < COLS; ++j) {
-            std::cout << matrix[i][j] << " ";
+void outputMatr(int* matr, int n, int m) {
+    for (int i = 0; i < n; ++i, std::cout << std::endl) {
+        for (int j = 0; j < m; ++j) {
+            std::cout << matr[i * m + j] << "\t";
         }
-        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
+
+void fillStaticMatr(int* matr, int n, int m) {
+    int staticValues[3][3] = {
+        {10, -2, 3},
+        {2, -10, 9},
+        {3, -4, -3}
+    };
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            matr[i * m + j] = staticValues[i][j];
+        }
     }
 }
 
-void findRowMinima(int matrix[ROWS][COLS]){
-  for (int i = 0; i < ROWS; i++) {
-    int smollest = 100; 
-    for (int j = 1; j < COLS; j++) {
-      if (matrix[i][j] < smollest) {
-          smollest = matrix[i][j];
-      }
-    }
-    SmollestOfRows.push_back(smollest);
-  }
-}
+int findMaxOfRowMins(int* matr, int n, int m) {
+    int rowMins[n];
 
-void findBigestOutOfSmollest(){
-  for (std::list<int>::iterator it = SmollestOfRows.begin(); it != SmollestOfRows.end(); ++it) {
-    if (*it > BigestOfSmollest){
-          BigestOfSmollest = *it;
+    for (int i = 0; i < n; ++i) {
+        int minVal = matr[i * m];
+        for (int j = 1; j < m; ++j) {
+            if (matr[i * m + j] < minVal) {
+                minVal = matr[i * m + j];
+            }
+        }
+        rowMins[i] = minVal;
     }
-  }
+
+    int maxOfMins = rowMins[0];
+    for (int i = 1; i < n; ++i) {
+        if (rowMins[i] > maxOfMins) {
+            maxOfMins = rowMins[i];
+        }
+    }
+
+    return maxOfMins;
 }
 
 int main() {
-    int matrix[ROWS][COLS] = {
-        {3, 2, 1},
-        {4, 5, 3},
-        {7, 6, 5}
-    };
+    const int n = 3, m = 3;
+    int mas2d[n][m];
 
-    findRowMinima(matrix);
-    findBigestOutOfSmollest();
+    fillStaticMatr(&mas2d[0][0], n, m);
     
-    std::cout << "Найбільше значення, серед найменших значень, кожного рядка, є: " << BigestOfSmollest << std::endl;
+    outputMatr(&mas2d[0][0], n, m);
 
-    std::cout << "Найменші значення в кожному ряді:\n";
-    for (std::list<int>::iterator it = SmollestOfRows.begin(); it != SmollestOfRows.end(); ++it) {
-        std::cout << *it << std::endl;
-    }
-
-    printMatrix(matrix);
+    int maxOfMins = findMaxOfRowMins(&mas2d[0][0], n, m);
+    std::cout << "Maximum of row minimums = " << maxOfMins << std::endl;
 
     return 0;
 }
